@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 15:18:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:26:12 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 21:07:52 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,24 @@
 
 void	print_board(t_game *game)
 {
-	int	i;
+	size_t	i = 0;
 
 	ft_putstr_fd("\n\t  ", STDOUT_FILENO);
-	for (i = 0; i < game->columns; i++) {
-		ft_putnbr_fd(i, STDOUT_FILENO);
+	size_t div = 1;
+	while (div < game->columns / 10) {
+		div *= 10;
+	}
+	
+	char c;
+	for (; div > 0; div /= 10) {
+		for (i = 0; i < game->columns; i++) {
+			if (i >= div)
+				c = (i / div) % 10 + '0';
+			else
+				c = ' ';
+			ft_putchar_fd(c, STDOUT_FILENO);
+		}
+		ft_putstr_fd("\n\t  ", STDOUT_FILENO);
 	}
 	ft_putchar_fd('\n', STDOUT_FILENO);
 
@@ -50,7 +63,7 @@ void	print_ending_message(t_game *game)
 }
 
 int	get_user_input(t_game *game) {
-	int	columns;
+	size_t	columns;
 	bool	error_check;
 	char	*input = NULL;
 
@@ -64,7 +77,7 @@ int	get_user_input(t_game *game) {
 			ft_putendl_fd("Invalid column number.", STDOUT_FILENO);
 			continue ;
 		}
-		if (columns < 0 || columns >= game->columns)
+		if (columns >= game->columns)
 			ft_putendl_fd("Invalid column number.", STDOUT_FILENO);
 		else if (game->board[0][columns] != '.')
 			ft_putendl_fd("This column is full.", STDOUT_FILENO);

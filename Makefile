@@ -6,19 +6,20 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/07/02 16:07:58 by pfrances         ###   ########.fr        #
+#    Updated: 2023/07/02 23:11:52 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = connect4
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
 SRCS = $(addprefix $(SRCS_DIR)/,	connect4.c					\
 									game_init.c					\
-									game_loop.c					\
+									graphic_mode.c				\
+									terminal_mode.c				\
 									game_loop_utils.c			\
 									checker.c					\
 									free_all.c					\
@@ -105,6 +106,12 @@ install:
 update:
 	brew update && brew upgrade && brew install readline
 
+debug: CXXFLAGS += -g -fsanitize=address
+debug: re
+
+valgrind: CXXFLAGS += -g
+valgrind: re
+	valgrind ./$(NAME) 100 100
 
 .PHONY: all clean fclean re bonus install update
 
