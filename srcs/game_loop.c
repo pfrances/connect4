@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 15:20:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:56:11 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:37:08 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	game_loop(t_game *game)
 		if (game->turn % 2 == rand_num)
 			put_stone(game, get_user_input(game), USER_STONE);
 		else
-			put_stone(game, get_user_input(game), AI_STONE);
-			// computer_turn(game);
+			computer_turn(game);
 		if (game->is_over == true)
 			break ;
 		game->turn++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connect4.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 11:02:43 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:51:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:38:02 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ void	print_board(t_game *game);
 
 int		get_user_input(t_game *game);
 void	print_ending_message(t_game *game);
+
+void    computer_turn(t_game *game);
+void	put_stone(t_game *game, int col, char stone);
 
 #endif

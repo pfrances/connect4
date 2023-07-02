@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: kitsuki <kitsuki@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/07/02 16:07:58 by pfrances         ###   ########.fr        #
+#    Updated: 2023/07/02 23:37:39 by kitsuki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = $(addprefix $(SRCS_DIR)/,	connect4.c					\
 									game_loop_utils.c			\
 									checker.c					\
 									free_all.c					\
+									computer.c					\
 									ft_atoi_with_error_check.c)
 OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
 
