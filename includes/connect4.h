@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 11:02:43 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:16:33 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:51:49 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "mlx.h"
 # include <readline/readline.h>
 # include <stdlib.h>
+# include <time.h>
 # include <unistd.h>
 # include <stdbool.h>
 

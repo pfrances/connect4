@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 11:05:49 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 15:24:56 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:49:13 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	usage(char *prgm_name) {
 
 int	main(int argc, char *argv[]) {
 	t_game	game;
+	srand(time(NULL));
 
 	if (argc != 3) {
 		usage(argv[0]);
 		return 1;
 	}
+
 	bool error_flag = true;
 	game.lines = ft_atoi_with_error_check(argv[1], &error_flag);
 	game.columns = ft_atoi_with_error_check(argv[2], &error_flag);
@@ -41,6 +43,7 @@ int	main(int argc, char *argv[]) {
 		ft_putendl_fd("game initialisation failed.", STDERR_FILENO);
 		return 3;
 	}
+
 	game_loop(&game);
 	free_all(&game);
 	return 0;
