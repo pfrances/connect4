@@ -6,17 +6,23 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/07/02 11:18:18 by pfrances         ###   ########.fr        #
+#    Updated: 2023/07/02 16:07:58 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = connect4
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -MMD -MP
 
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
-SRCS = $(addprefix $(SRCS_DIR)/,	connect4.c)
+SRCS = $(addprefix $(SRCS_DIR)/,	connect4.c					\
+									game_init.c					\
+									game_loop.c					\
+									game_loop_utils.c			\
+									checker.c					\
+									free_all.c					\
+									ft_atoi_with_error_check.c)
 OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
 
 LIBS_DIR = ./libraries
@@ -41,6 +47,9 @@ FRAMERATE = FRAMERATE=1000
 ADJUST = ADJUST=0
 MLX = $(MLX_DIR)/libmlx.a
 MLX_LIBS = -I $(MLX_DIR) -L $(MLX_DIR) -lmlx -lXext -lX11 $(MLX)
+
+READLINE = -L/usr/lib/x86_64-linux-gnu -lreadline
+INCLUDE += -I/usr/include/readline/
 else
 ESC = ESC=53
 W = W=13
@@ -52,13 +61,16 @@ ADJUST = ADJUST=20
 MLX = $(MLX_DIR)/libmlx_Darwin.a
 INCLUDES += -I/usr/X11/include
 MLX_LIBS = -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
+
+READLINE = -L$(shell brew --prefix readline)/lib -lreadline
+INCLUDE += -I$(shell brew --prefix readline)/include
 endif
 #--------------------------------------------------------------------------#
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(MLX_LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(MLX_LIBS) $(READLINE) -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
 	@mkdir -p $(@D)
@@ -76,16 +88,24 @@ $(MLX_DIR)/Makefile:
 clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
-	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
-	rm -rf $(MLX_DIR)
+#	rm -rf $(MLX_DIR)
 
 re: fclean all
 
 bonus: all
-.PHONY: all clean fclean re bonus
+
+install:
+	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+
+update:
+	brew update && brew upgrade && brew install readline
+
+
+.PHONY: all clean fclean re bonus install update
 
 -include $(DEPS)
