@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 16:02:29 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:28:03 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:32:42 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	check_horizontal(t_game *game, int stone)
 {
-	int	i;
-	int	j;
-	int	count;
+	size_t	i;
+	size_t	j;
+	size_t	count;
 
 	i = 0;
 	while (i < game->lines)
@@ -39,9 +39,9 @@ static void	check_horizontal(t_game *game, int stone)
 
 static void	check_vertical(t_game *game, int stone)
 {
-	int	i;
-	int	j;
-	int	count;
+	size_t	i;
+	size_t	j;
+	size_t	count;
 
 	j = 0;
 	while (j < game->columns)
@@ -63,9 +63,9 @@ static void	check_vertical(t_game *game, int stone)
 }
 
 static void	check_diagonal(t_game *game, int stone) {
-	int	i;
-	int	j;
-	int	count;
+	size_t	i;
+	size_t	j;
+	size_t	count;
 
 	i = 0;
 	while (i < game->lines)
@@ -94,14 +94,26 @@ static void	check_diagonal(t_game *game, int stone) {
 
 void	check_board(t_game *game, int stone)
 {
+	if (game->is_over == true)
+		return ;
 	check_horizontal(game, stone);
 	check_vertical(game, stone);
 	check_diagonal(game, stone);
-	
-	if (game->is_over == true) {
+
+	if ((size_t)game->turn == game->lines * game->columns) {
+		game->is_over = true;
+		game->winner = DRAW;
+		print_board(game);
+		print_ending_message(game);
+		exit(0);
+	}
+	else if (game->is_over == true) {
 		if (stone == USER_STONE)
 			game->winner = USER_WIN;
 		else
 			game->winner = AI_WIN;
+		print_board(game);
+		print_ending_message(game);
+		exit(0);
 	}
 }

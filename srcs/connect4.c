@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 11:05:49 by pfrances          #+#    #+#             */
-/*   Updated: 2023/07/02 16:49:13 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:26:24 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	main(int argc, char *argv[]) {
 		return 3;
 	}
 
-	game_loop(&game);
+	if (game.graphic_mode == true)
+		graphic_mode(&game);
+	else
+		terminal_mode(&game);
 	free_all(&game);
 	return 0;
 }
